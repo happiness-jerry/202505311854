@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语口语训练平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4ade80;
+            --warning: #facc15;
+            --danger: #f87171;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+        }
+        
+        .logo h1 {
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3ab9e0;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .section-title i {
+            font-size: 1.5rem;
+        }
+        
+        .training-principles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .principle-card {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+        
+        .principle-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .principle-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .principle-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+        
+        .training-phase {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .phase-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            border-top: 4px solid var(--accent);
+        }
+        
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+        
+        .phase-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .phase-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .phase-content {
+            padding-left: 60px;
+        }
+        
+        .phase-content ol {
+            padding-left: 1.5rem;
+        }
+        
+        .phase-content li {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+        
+        .material-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .material-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .material-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+        
+        .material-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+        }
+        
+        .material-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .material-id {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        .material-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .material-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            color: var(--gray);
+        }
+        
+        .material-stats {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .material-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .btn-icon {
+            padding: 8px 12px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-view {
+            background-color: var(--primary);
+            color: white;
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .btn-edit {
+            background-color: var(--warning);
+            color: var(--dark);
+        }
+        
+        .btn-delete {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: modalOpen 0.4s ease;
+        }
+        
+        @keyframes modalOpen {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .material-detail {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .detail-section {
+            margin-bottom: 2rem;
+        }
+        
+        .detail-section h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .detail-section-content {
+            padding-left: 10px;
+            border-left: 3px solid var(--accent);
+            margin-left: 10px;
+        }
+        
+        .detail-section-content p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .dialogue {
+            background: #f8f9ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .phrase-highlight {
+            background: #fff9db;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 1rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+            background: white;
+            margin-top: 3rem;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .disclaimer {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .disclaimer strong {
+            color: var(--danger);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .material-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .training-principles {
+                grid-template-columns: 1fr;
+            }
+            
+            .phase-content {
+                padding-left: 0;
+                padding-top: 1rem;
+            }
+            
+            .phase-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .modal-body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-comments"></i>
+                <h1>英语口语训练平台</h1>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn btn-outline" id="add-material-btn">
+                    <i class="fas fa-plus"></i> 添加材料
+                </button>
+                <button class="btn btn-primary">
+                    <i class="fas fa-user"></i> 用户中心
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- 训练规则部分 -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-clipboard-list"></i> 训练规则
+                </h2>
+            </div>
+            
+            <div class="training-phase">
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <div class="phase-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3 class="phase-title">1. 学习阶段 (20分钟)</h3>
+                    </div>
+                    <div class="phase-content">
+                        <ol>
+                            <li><strong>学习材料 (15分钟)</strong>：仔细学习材料内容</li>
+                            <li><strong>检查材料 (5分钟)</strong>：认真复习材料内容</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <div class="phase-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="phase-title">2. 讨论阶段 (20分钟)</h3>
+                    </div>
+                    <div class="phase-content">
+                        <ol>
+                            <li><strong>限制性讨论 (15分钟)</strong>：讨论与材料相关的预设问题</li>
+                            <li><strong>自由讨论 (5分钟)</strong>：自由讨论任何话题</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <div class="phase-icon">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <h3 class="phase-title">3. 表达阶段 (20分钟)</h3>
+                    </div>
+                    <div class="phase-content">
+                        <ol>
+                            <li><strong>情境表达 (15分钟)</strong>：在相关情境中进行表达</li>
+                            <li><strong>自由表达 (5分钟)</strong>：轮流进行个人表达</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-header" style="margin-top: 2rem;">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i> 训练原则
+                </h2>
+            </div>
+            
+            <div class="training-principles">
+                <div class="principle-card">
+                    <h4><i class="fas fa-ban"></i> 禁止歧视</h4>
+                    <p>在训练过程中，禁止任何形式的歧视性言论和行为，尊重所有参与者的背景和文化。</p>
+                </div>
+                
+                <div class="principle-card">
+                    <h4><i class="fas fa-exclamation-triangle"></i> 避免敏感话题</h4>
+                    <p>讨论中避免涉及政治、宗教等敏感话题，保持对话友好和建设性。</p>
+                </div>
+                
+                <div class="principle-card">
+                    <h4><i class="fas fa-handshake"></i> 相互尊重</h4>
+                    <p>所有参与者应相互尊重，认真倾听他人观点，给予建设性反馈。</p>
+                </div>
+                
+                <div class="principle-card">
+                    <h4><i class="fas fa-clock"></i> 准时参与</h4>
+                    <p>请按时参加训练，尊重他人的时间，确保训练按计划进行。</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 训练材料部分 -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-book-open"></i> 口语训练材料
+                </h2>
+            </div>
+            
+            <div class="material-grid" id="material-container">
+                <!-- 材料卡片通过JavaScript动态生成 -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- 材料详情模态框 -->
+    <div class="modal" id="material-detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="detail-modal-title">材料详情</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="material-detail-content">
+                <!-- 详情内容通过JavaScript动态生成 -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- 添加/编辑材料模态框 -->
+    <div class="modal" id="edit-material-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="edit-modal-title">添加新训练材料</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="material-form">
+                    <input type="hidden" id="material-id">
+                    
+                    <div class="form-group">
+                        <label for="material-title">主题标题</label>
+                        <input type="text" class="form-control" id="material-title" placeholder="输入主题标题" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="material-content">训练内容</label>
+                        <textarea class="form-control" id="material-content" placeholder="输入完整的训练计划内容..." required></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="cancel-edit">取消</button>
+                        <button type="submit" class="btn btn-primary">保存材料</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚声明 -->
+    <footer>
+        <div class="disclaimer">
+            <p><strong>声明：</strong>本平台所有内容仅供学习交流使用，不涉及任何商业用途。未经许可，不得将平台内容用于任何商业目的或进行二次分发。</p>
+            <p>© 2023 英语口语训练平台 | 提升英语口语能力，促进文化交流</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 示例训练材料数据
+        const trainingMaterials = [
+            {
+                id: 1,
+                title: "I can say what I want or what I need",
+                content: `## I can say what I want or what I need
+### 1. Learning (20 minutes)  
+#### 1.1 Learning Material (15 minutes)  
+**Material Type**: Short Dialogue  
+**Content**:  
+> *Alex, Sam, and Taylor are planning a weekend camping trip.*  
+> **Alex**: "I **could do with** a new sleeping bag; mine’s torn. **If need be**, I’ll borrow one, but I’d rather not **do without** it."  
+> **Sam**: "I **feel like buying** a portable grill. Honestly, I’ve **been dying for** barbecues since summer started!"  
+> **Taylor**: "I **set my heart on** stargazing at the lake. Forget the grill—we can **make do with** a campfire. Don’t you care about the view?"  
+> **Sam**: "I **couldn’t care less** about stars! But fine, we can **pick and choose** activities later."  
+
+**Method**:  
+① Read aloud together (each takes one role).  
+② Summarize the dialogue in 2 sentences using 3+ target phrases.  
+
+---
+
+#### 1.2 Checking Material (5 minutes)  
+**Phrase Review**:  
+- \`Could do with sth\` (need/want something)  
+- \`If need be\` (if necessary)  
+- \`Do without sth/sb\` (manage without)  
+- \`Feel like sth/doing sth\` (want something casually)  
+- \`Be dying to do/for sth\` (desire intensely)  
+- \`Set your heart on sth\` (deeply desire a goal/item)  
+- \`Make do (with sth)\` (accept something less ideal)  
+- \`Couldn’t care less\` (not care at all)  
+- \`Pick and choose\` (select only preferred options)  
+
+**Review Task**:  
+Create a short story using some phrase.  
+*Example*: "Lena *set her heart on* concert tickets. Sold out? She’ll *make do* with livestream *if need be*."  
+
+---
+
+### 2. Discussion (20 minutes)  
+#### 2.1 Restricted Discussion (15 minutes)  
+**Questions**:  
+1. *Personal*: When did you last **make do with** something suboptimal? Why didn’t you **pick and choose**?  
+2. *Societal*: How does "**couldn’t care less**" culture affect sustainability (e.g., fast fashion)?  
+3. *Aspirational*: What dream have you **set your heart on**? What would you **do without** to achieve it?  
+
+#### 2.2 Unrestricted Discussion (5 minutes)  
+**Keywords**:  
+*Priorities, compromise, instant gratification*  
+
+---
+
+### 3. Expression (20 minutes)  
+#### 3.1 Situational Expression (15 minutes)  
+**Scenario**: *Planning a Group Budget Trip*  
+- **Background**: $300 total budget; 3 days; conflicting interests (adventure vs. relaxation).  
+- **Roles**:  
+  - *A*: Thrill-seeker (**dying for** skydiving; **could do with** cheap hostels).  
+  - *B*: Food lover (**feel like trying** local cuisine; refuses to **do without** good meals).  
+  - *C*: Budget hawk (**set heart on** saving $100; insists others **make do** with street food).  
+- **Goal**: Agree on an itinerary using 5+ target phrases.  
+
+#### 3.2 Free Expression (5 minutes)  
+**Prompt**: Share your learning takeaways using:  
+*Priorities, sacrifice, "less is more"*`
+            },
+            {
+                id: 2,
+                title: "Expressing Opinions and Agreement",
+                content: `## Expressing Opinions and Agreement
+### 1. Learning (20 minutes)  
+#### 1.1 Learning Material (15 minutes)  
+**Material Type**: Debate Excerpt  
+**Content**:  
+> *Environmental policy discussion between three colleagues*  
+> **Emma**: "I **firmly believe** that carbon taxes are essential. **As far as I'm concerned**, they're our best tool against climate change."  
+> **James**: "**I see your point**, but I **tend to think** they disproportionately affect low-income households. **Wouldn't you agree** that alternatives exist?"  
+> **Liam**: "**I'm convinced** we need a balanced approach. **It seems to me** that subsidies for green technology could complement taxation."  
+
+**Method**:  
+① Identify all opinion phrases.  
+② Rewrite the dialogue using different opinion expressions.  
+
+---
+
+#### 1.2 Checking Material (5 minutes)  
+**Phrase Review**:  
+- \`I firmly believe\` (strong conviction)  
+- \`As far as I'm concerned\` (personal perspective)  
+- \`I see your point\` (acknowledging others' views)  
+- \`I tend to think\` (expressing tendency)  
+- \`Wouldn't you agree\` (seeking agreement)  
+- \`I'm convinced\` (strong belief)  
+- \`It seems to me\` (personal observation)  
+
+**Review Task**:  
+Write three sentences expressing opinions on remote work using different phrases.  
+
+---
+
+### 2. Discussion (20 minutes)  
+#### 2.1 Restricted Discussion (15 minutes)  
+**Questions**:  
+1. *Professional*: What workplace policy do you **firmly believe** should change?  
+2. *Cultural*: **Wouldn't you agree** that social media impacts attention spans?  
+3. *Ethical*: Share an ethical stance you're **convinced** about.  
+
+#### 2.2 Unrestricted Discussion (5 minutes)  
+**Keywords**:  
+*Conviction, perspective, compromise*  
+
+---
+
+### 3. Expression (20 minutes)  
+#### 3.1 Situational Expression (15 minutes)  
+**Scenario**: *Team Decision on Project Approach*  
+- **Background**: Choosing between innovative (risky) vs. traditional (safe) methods.  
+- **Roles**:  
+  - *A*: Innovator (**convinced** of new approach; sees risks as manageable)  
+  - *B*: Traditionalist (**firmly believes** in proven methods; risk-averse)  
+  - *C*: Mediator (**sees points** on both sides; seeks compromise)  
+- **Goal**: Reach consensus using 6+ opinion phrases.  
+
+#### 3.2 Free Expression (5 minutes)  
+**Prompt**: Express your view on work-life balance using:  
+*Priorities, boundaries, sustainability*`
+            },
+            {
+                id: 3,
+                title: "Describing Experiences and Memories",
+                content: `## Describing Experiences and Memories
+### 1. Learning (20 minutes)  
+#### 1.1 Learning Material (15 minutes)  
+**Material Type**: Narrative Paragraph  
+**Content**:  
+> "I'll **never forget** my first solo trip to Kyoto. **What stands out** is arriving at Fushimi Inari at dawn. **I distinctly remember** the rustling torii gates and the smell of incense. **It was one of those moments** when time seemed to stop. **Looking back**, I realize how much it shaped my love for travel. **If I could relive** any experience, it would be that sunrise climb."  
+
+**Method**:  
+① Underline all memory phrases.  
+② Share a personal memory using 3+ target phrases.  
+
+---
+
+#### 1.2 Checking Material (5 minutes)  
+**Phrase Review**:  
+- \`I'll never forget\` (unforgettable memory)  
+- \`What stands out\` (most memorable aspect)  
+- \`I distinctly remember\` (clear recollection)  
+- \`It was one of those moments\` (defining experience)  
+- \`Looking back\` (retrospective view)  
+- \`If I could relive\` (desire to experience again)  
+
+**Review Task**:  
+Describe a childhood memory using at least four phrases.  
+
+---
+
+### 2. Discussion (20 minutes)  
+#### 2.1 Restricted Discussion (15 minutes)  
+**Questions**:  
+1. *Travel*: What destination do you **never forget**? What **stands out** most?  
+2. *Learning*: Share an educational moment you'd **relive** if possible.  
+3. *Cultural*: **Looking back**, how has your culture shaped your values?  
+
+#### 2.2 Unrestricted Discussion (5 minutes)  
+**Keywords**:  
+*Nostalgia, perspective, growth*  
+
+---
+
+### 3. Expression (20 minutes)  
+#### 3.1 Situational Expression (15 minutes)  
+**Scenario**: *Podcast Interview About Life-Changing Experiences*  
+- **Background**: Host interviews guest about pivotal life moments.  
+- **Roles**:  
+  - *Host*: Asks probing questions about memories.  
+  - *Guest*: Shares detailed recollections using target phrases.  
+- **Goal**: 4-minute conversation using 8+ memory phrases naturally.  
+
+#### 3.2 Free Expression (5 minutes)  
+**Prompt**: Describe a memory that taught you resilience using:  
+*Overcoming, perspective, growth*`
+            }
+        ];
+        
+        // DOM元素引用
+        const materialContainer = document.getElementById('material-container');
+        const materialDetailModal = document.getElementById('material-detail-modal');
+        const materialDetailContent = document.getElementById('material-detail-content');
+        const detailModalTitle = document.getElementById('detail-modal-title');
+        const editMaterialModal = document.getElementById('edit-material-modal');
+        const editModalTitle = document.getElementById('edit-modal-title');
+        const materialForm = document.getElementById('material-form');
+        const materialIdInput = document.getElementById('material-id');
+        const materialTitleInput = document.getElementById('material-title');
+        const materialContentInput = document.getElementById('material-content');
+        const addMaterialBtn = document.getElementById('add-material-btn');
+        const cancelEditBtn = document.getElementById('cancel-edit');
+        
+        // 关闭模态框的按钮
+        const closeModalButtons = document.querySelectorAll('.close-modal');
+        
+        // 渲染训练材料卡片
+        function renderMaterials() {
+            materialContainer.innerHTML = '';
+            
+            trainingMaterials.forEach(material => {
+                const materialCard = document.createElement('div');
+                materialCard.className = 'material-card';
+                materialCard.innerHTML = `
+                    <div class="material-header">
+                        <h3 class="material-title">${material.title}</h3>
+                        <div class="material-id">材料 ID: ${material.id}</div>
+                    </div>
+                    <div class="material-body">
+                        <p class="material-description">点击查看此口语训练材料的完整内容，包括学习、讨论和表达三个阶段的详细计划。</p>
+                        <div class="material-stats">
+                            <span><i class="fas fa-clock"></i> 60分钟训练</span>
+                            <span><i class="fas fa-chart-bar"></i> 中级难度</span>
+                        </div>
+                        <div class="material-actions">
+                            <button class="btn btn-icon btn-view" data-id="${material.id}">
+                                <i class="fas fa-eye"></i> 查看详情
+                            </button>
+                            <button class="btn btn-icon btn-edit" data-id="${material.id}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-icon btn-delete" data-id="${material.id}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                materialContainer.appendChild(materialCard);
+            });
+            
+            // 添加查看详情事件监听
+            document.querySelectorAll('.btn-view').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    showMaterialDetail(id);
+                });
+            });
+            
+            // 添加编辑事件监听
+            document.querySelectorAll('.btn-edit').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    editMaterial(id);
+                });
+            });
+            
+            // 添加删除事件监听
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    if (confirm('确定要删除这个训练材料吗？此操作不可恢复。')) {
+                        deleteMaterial(id);
+                    }
+                });
+            });
+        }
+        
+        // 显示材料详情
+        function showMaterialDetail(id) {
+            const material = trainingMaterials.find(m => m.id === id);
+            if (!material) return;
+            
+            // 将Markdown内容转换为HTML（简化处理）
+            const contentHtml = material.content
+                .replace(/## (.*)/g, '<h3 class="detail-section-title">$1</h3>')
+                .replace(/### (.*)/g, '<h4>$1</h4>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/`(.*?)`/g, '<code>$1</code>')
+                .replace(/> (.*)/g, '<blockquote>$1</blockquote>')
+                .replace(/\n/g, '<br>');
+            
+            detailModalTitle.textContent = material.title;
+            materialDetailContent.innerHTML = `
+                <div class="material-detail">
+                    <div class="detail-section">
+                        <h3><i class="fas fa-info-circle"></i> 材料概览</h3>
+                        <div class="detail-section-content">
+                            <p><strong>主题：</strong> ${material.title}</p>
+                            <p><strong>训练时长：</strong> 60分钟</p>
+                            <p><strong>适合水平：</strong> 中级英语学习者</p>
+                            <p><strong>训练重点：</strong> 表达需求、讨论观点、情境应用</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h3><i class="fas fa-book"></i> 训练内容</h3>
+                        <div class="detail-section-content">
+                            ${contentHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            materialDetailModal.style.display = 'flex';
+        }
+        
+        // 添加新材料
+        function addNewMaterial() {
+            materialIdInput.value = '';
+            materialTitleInput.value = '';
+            materialContentInput.value = '';
+            editModalTitle.textContent = '添加新训练材料';
+            editMaterialModal.style.display = 'flex';
+        }
+        
+        // 编辑现有材料
+        function editMaterial(id) {
+            const material = trainingMaterials.find(m => m.id === id);
+            if (!material) return;
+            
+            materialIdInput.value = material.id;
+            materialTitleInput.value = material.title;
+            materialContentInput.value = material.content;
+            editModalTitle.textContent = '编辑训练材料';
+            editMaterialModal.style.display = 'flex';
+        }
+        
+        // 删除材料
+        function deleteMaterial(id) {
+            const index = trainingMaterials.findIndex(m => m.id === id);
+            if (index !== -1) {
+                trainingMaterials.splice(index, 1);
+                renderMaterials();
+                alert('材料已成功删除');
+            }
+        }
+        
+        // 保存材料（添加或更新）
+        function saveMaterial(e) {
+            e.preventDefault();
+            
+            const id = materialIdInput.value ? parseInt(materialIdInput.value) : null;
+            const title = materialTitleInput.value.trim();
+            const content = materialContentInput.value.trim();
+            
+            if (!title || !content) {
+                alert('请填写所有必填字段');
+                return;
+            }
+            
+            if (id) {
+                // 更新现有材料
+                const material = trainingMaterials.find(m => m.id === id);
+                if (material) {
+                    material.title = title;
+                    material.content = content;
+                }
+            } else {
+                // 添加新材料
+                const newId = trainingMaterials.length > 0 
+                    ? Math.max(...trainingMaterials.map(m => m.id)) + 1 
+                    : 1;
+                    
+                trainingMaterials.push({
+                    id: newId,
+                    title,
+                    content
+                });
+            }
+            
+            renderMaterials();
+            closeModal(editMaterialModal);
+            alert(`材料已成功${id ? '更新' : '添加'}`);
+        }
+        
+        // 关闭模态框
+        function closeModal(modal) {
+            modal.style.display = 'none';
+        }
+        
+        // 事件监听器
+        addMaterialBtn.addEventListener('click', addNewMaterial);
+        materialForm.addEventListener('submit', saveMaterial);
+        cancelEditBtn.addEventListener('click', () => closeModal(editMaterialModal));
+        
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const modal = this.closest('.modal');
+                closeModal(modal);
+            });
+        });
+        
+        // 点击模态框外部关闭
+        window.addEventListener('click', function(e) {
+            if (e.target === materialDetailModal) {
+                closeModal(materialDetailModal);
+            }
+            if (e.target === editMaterialModal) {
+                closeModal(editMaterialModal);
+            }
+        });
+        
+        // 初始化渲染
+        renderMaterials();
+    </script>
+</body>
+</html>

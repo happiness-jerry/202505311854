@@ -6,6 +6,7 @@
     <title>英语口语训练平台</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* 新增动画变量 */
         :root {
             --primary: #4361ee;
             --secondary: #3f37c9;
@@ -17,6 +18,44 @@
             --danger: #f87171;
             --gray: #6c757d;
             --light-gray: #e9ecef;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        /* 新增页面加载动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 新增按钮涟漪效果 */
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 0 0;
+        }
+        
+        .ripple:focus:not(:active)::after {
+            animation: ripple 0.6s ease-out;
         }
         
         * {
@@ -31,8 +70,11 @@
             color: var(--dark);
             min-height: 100vh;
             padding-bottom: 60px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
         }
         
+        /* 增强头部动画 */
         header {
             background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
@@ -41,13 +83,20 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            transform: translateY(-100%);
+            animation: slideDown 0.6s 0.3s ease-out forwards;
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
         }
         
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: center; /* 修改为居中 */
+            justify-content: center;
             align-items: center;
         }
         
@@ -55,10 +104,20 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            transition: var(--transition);
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
         }
         
         .logo i {
             font-size: 2rem;
+            transition: var(--transition);
+        }
+        
+        .logo:hover i {
+            transform: rotate(10deg);
         }
         
         .logo h1 {
@@ -70,6 +129,9 @@
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s 0.5s ease-out forwards;
         }
         
         .section {
@@ -78,6 +140,12 @@
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
             padding: 2rem;
             margin-bottom: 2.5rem;
+            transition: var(--transition);
+            transform-origin: top center;
+        }
+        
+        .section:hover {
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
         }
         
         .section-header {
@@ -96,10 +164,20 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            transition: var(--transition);
+        }
+        
+        .section-title:hover {
+            color: var(--secondary);
         }
         
         .section-title i {
             font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .section-title:hover i {
+            transform: rotate(15deg) scale(1.1);
         }
         
         .training-principles {
@@ -114,11 +192,14 @@
             border-radius: 12px;
             padding: 1.5rem;
             border-left: 4px solid var(--primary);
-            transition: transform 0.3s ease;
+            transition: var(--transition);
+            perspective: 1000px;
         }
         
+        /* 增强卡片3D效果 */
         .principle-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 15px 30px rgba(67, 97, 238, 0.15);
         }
         
         .principle-card h4 {
@@ -130,9 +211,23 @@
             gap: 8px;
         }
         
+        .principle-card h4 i {
+            transition: var(--transition);
+        }
+        
+        .principle-card:hover h4 i {
+            transform: scale(1.2);
+            color: var(--accent);
+        }
+        
         .principle-card p {
             color: var(--gray);
             line-height: 1.6;
+            transition: var(--transition);
+        }
+        
+        .principle-card:hover p {
+            color: var(--dark);
         }
         
         .training-phase {
@@ -147,6 +242,12 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             padding: 1.5rem;
             border-top: 4px solid var(--accent);
+            transition: var(--transition);
+        }
+        
+        .phase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
         
         .phase-header {
@@ -166,25 +267,26 @@
             justify-content: center;
             color: white;
             font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .phase-card:hover .phase-icon {
+            transform: rotate(15deg) scale(1.1);
         }
         
         .phase-title {
             font-size: 1.4rem;
             font-weight: 600;
             color: var(--dark);
+            transition: var(--transition);
+        }
+        
+        .phase-card:hover .phase-title {
+            color: var(--primary);
         }
         
         .phase-content {
             padding-left: 60px;
-        }
-        
-        .phase-content ol {
-            padding-left: 1.5rem;
-        }
-        
-        .phase-content li {
-            margin-bottom: 0.8rem;
-            line-height: 1.6;
         }
         
         .material-grid {
@@ -199,27 +301,39 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
+            transition: var(--transition);
             display: flex;
             flex-direction: column;
             height: 100%;
+            transform-style: preserve-3d;
         }
         
+        /* 增强材料卡片3D效果 */
         .material-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
         
         .material-header {
             background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
             padding: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .material-card:hover .material-header {
+            background: linear-gradient(to right, var(--secondary), var(--primary));
         }
         
         .material-title {
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+        
+        .material-card:hover .material-title {
+            letter-spacing: 0.5px;
         }
         
         .material-id {
@@ -239,6 +353,11 @@
             margin-bottom: 1.5rem;
             line-height: 1.6;
             color: var(--gray);
+            transition: var(--transition);
+        }
+        
+        .material-card:hover .material-description {
+            color: var(--dark);
         }
         
         .material-stats {
@@ -262,6 +381,11 @@
             align-items: center;
             gap: 6px;
             font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            position: relative;
+            transition: var(--transition);
         }
         
         .btn-view {
@@ -271,6 +395,17 @@
             justify-content: center;
         }
         
+        .btn-view:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-view:active {
+            transform: translateY(1px);
+        }
+        
+        /* 模态框增强动画 */
         .modal {
             display: none;
             position: fixed;
@@ -283,6 +418,13 @@
             justify-content: center;
             align-items: center;
             padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+            opacity: 1;
         }
         
         .modal-content {
@@ -293,18 +435,14 @@
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            animation: modalOpen 0.4s ease;
+            transform: scale(0.8) translateY(30px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        @keyframes modalOpen {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .modal.active .modal-content {
+            transform: scale(1) translateY(0);
+            opacity: 1;
         }
         
         .modal-header {
@@ -319,11 +457,6 @@
             z-index: 10;
         }
         
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        
         .close-modal {
             background: none;
             border: none;
@@ -336,85 +469,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.3s;
         }
         
         .close-modal:hover {
             background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
         }
         
-        .modal-body {
-            padding: 2rem;
-        }
-        
-        .material-detail {
-            background: var(--light);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .detail-section {
-            margin-bottom: 2rem;
-        }
-        
-        .detail-section h3 {
-            font-size: 1.3rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--light-gray);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .detail-section-content {
-            padding-left: 10px;
-            border-left: 3px solid var(--accent);
-            margin-left: 10px;
-        }
-        
-        .detail-section-content p {
-            margin-bottom: 1rem;
-            line-height: 1.7;
-        }
-        
-        .dialogue {
-            background: #f8f9ff;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .phrase-highlight {
-            background: #fff9db;
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--gray);
-            font-size: 0.9rem;
-            background: white;
-            margin-top: 3rem;
-            border-top: 1px solid var(--light-gray);
-        }
-        
-        .disclaimer {
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-        
-        .disclaimer strong {
-            color: var(--danger);
-        }
-        
+        /* 响应式设计 */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -442,6 +505,10 @@
             
             .modal-body {
                 padding: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -520,24 +587,25 @@
             </div>
             
             <div class="training-principles">
+                <!-- 更新图标以匹配标题 -->
                 <div class="principle-card">
-                    <h4><i class="fas fa-ban"></i> 尊重多元</h4>
+                    <h4><i class="fas fa-globe-asia"></i> 尊重多元</h4>
                     <p>尊重所有参与者的文化背景、身份差异，严禁任何形式的歧视、偏见性表达与行为，构建包容开放的训练环境。</p>
                 </div>
                 
                 <div class="principle-card">
-                    <h4><i class="fas fa-exclamation-triangle"></i> 尊重话权</h4>
+                    <h4><i class="fas fa-microphone-alt"></i> 尊重话权</h4>
                     <p>参与者需尊重彼此话语权，认真倾听、不打断，理性交流观点，以鼓励、建议等建设性反馈促进共同进步。</p>
                 </div>
                 
                 <div class="principle-card">
-                    <h4><i class="fas fa-handshake"></i> 尊重话题</h4>
+                    <h4><i class="fas fa-comments"></i> 尊重话题</h4>
                     <p>交流围绕口语训练目标展开，避开政治、宗教、争议性社会事件等敏感、非训练相关内容，保持讨论正向、有价值。</p>
                 </div>
                 
                 <div class="principle-card">
                     <h4><i class="fas fa-clock"></i> 尊重时间</h4>
-                    <p>严格遵守训练时间，准时参与、有序开展，保障训练节奏与计划推进，提升团队协作及训练效率 。</p>
+                    <p>严格遵守训练时间，准时参与、有序开展，保障训练节奏与计划推进，提升团队协作及训练效率。</p>
                 </div>
             </div>
         </div>
@@ -626,7 +694,7 @@
                             <span><i class="fas fa-chart-bar"></i> ${material.level || '中级'}难度</span>
                         </div>
                         <div class="material-actions">
-                            <button class="btn btn-icon btn-view" data-id="${material.id}">
+                            <button class="btn btn-icon btn-view ripple" data-id="${material.id}">
                                 <i class="fas fa-eye"></i> 查看详情
                             </button>
                         </div>
@@ -637,9 +705,26 @@
             
             // 添加查看详情事件监听
             document.querySelectorAll('.btn-view').forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function(e) {
                     const id = parseInt(this.getAttribute('data-id'));
                     showMaterialDetail(id);
+                    
+                    // 添加涟漪效果
+                    const ripple = document.createElement('span');
+                    ripple.className = 'ripple-effect';
+                    this.appendChild(ripple);
+                    
+                    // 移除旧涟漪效果
+                    const oldRipple = this.querySelector('.ripple-effect');
+                    if (oldRipple) oldRipple.remove();
+                    
+                    // 设置涟漪位置
+                    const rect = this.getBoundingClientRect();
+                    ripple.style.left = (e.clientX - rect.left) + 'px';
+                    ripple.style.top = (e.clientY - rect.top) + 'px';
+                    
+                    // 动画结束后移除元素
+                    setTimeout(() => ripple.remove(), 600);
                 });
             });
         }
@@ -682,7 +767,9 @@
                     </div>
                 `;
                 
-                materialDetailModal.style.display = 'flex';
+                // 使用更流畅的动画显示模态框
+                materialDetailModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
             } catch (error) {
                 console.error('加载材料详情出错:', error);
                 materialDetailContent.innerHTML = `<div class="error">材料内容加载失败</div>`;
@@ -691,7 +778,9 @@
         
         // 关闭模态框
         function closeModal(modal) {
-            modal.style.display = 'none';
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            
             // 从URL移除material参数
             const url = new URL(window.location);
             url.searchParams.delete('material');

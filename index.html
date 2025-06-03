@@ -577,88 +577,41 @@
         </div>
     </footer>
     
+    <script src="assets/markdown-parser.js"></script>
     <script>
-        // 示例训练材料数据
-        const trainingMaterials = [
-            {
-                id: 1,
-                title: "I can say what I want or what I need",
-                content: `## I can say what I want or what I need
-## 1. Learning (20 minutes)  
-## 1.1 Learning Material (15 minutes)  
-**Material Type**: Short Dialogue  
-**Content**:  
-> *Alex, Sam, and Taylor are planning a weekend camping trip.*  
-> **Alex**: "I **could do with** a new sleeping bag; mine’s torn. **If need be**, I’ll borrow one, but I’d rather not **do without** it."  
-> **Sam**: "I **feel like buying** a portable grill. Honestly, I’ve **been dying for** barbecues since summer started!"  
-> **Taylor**: "I **set my heart on** stargazing at the lake. Forget the grill—we can **make do with** a campfire. Don’t you care about the view?"  
-> **Sam**: "I **couldn’t care less** about stars! But fine, we can **pick and choose** activities later."  
-
-**Method**:  
-① Read aloud together (each takes one role).  
-② Summarize the dialogue in 2 sentences using 3+ target phrases.  
-
----
-
-## 1.2 Checking Material (5 minutes)  
-**Phrase Review**:  
-- \`Could do with sth\` (need/want something)  
-- \`If need be\` (if necessary)  
-- \`Do without sth/sb\` (manage without)  
-- \`Feel like sth/doing sth\` (want something casually)  
-- \`Be dying to do/for sth\` (desire intensely)  
-- \`Set your heart on sth\` (deeply desire a goal/item)  
-- \`Make do (with sth)\` (accept something less ideal)  
-- \`Couldn’t care less\` (not care at all)  
-- \`Pick and choose\` (select only preferred options)  
-
-**Review Task**:  
-Create a short story using some phrase.  
-*Example*: "Lena *set her heart on* concert tickets. Sold out? She’ll *make do* with livestream *if need be*."  
-
----
-
-## 2. Discussion (20 minutes)  
-## 2.1 Restricted Discussion (15 minutes)  
-**Questions**:  
-1. *Personal*: When did you last **make do with** something suboptimal? Why didn’t you **pick and choose**?  
-2. *Societal*: How does "**couldn’t care less**" culture affect sustainability (e.g., fast fashion)?  
-3. *Aspirational*: What dream have you **set your heart on**? What would you **do without** to achieve it?  
-
-## 2.2 Unrestricted Discussion (5 minutes)  
-**Keywords**:  
-*Priorities, compromise, instant gratification*  
-
----
-
-## 3. Expression (20 minutes)  
-## 3.1 Situational Expression (15 minutes)  
-**Scenario**: *Planning a Group Budget Trip*  
-- **Background**: $300 total budget; 3 days; conflicting interests (adventure vs. relaxation).  
-- **Roles**:  
-  - *A*: Thrill-seeker (**dying for** skydiving; **could do with** cheap hostels).  
-  - *B*: Food lover (**feel like trying** local cuisine; refuses to **do without** good meals).  
-  - *C*: Budget hawk (**set heart on** saving $100; insists others **make do** with street food).  
-- **Goal**: Agree on an itinerary.  
-
-## 3.2 Free Expression (5 minutes)  
-**Prompt**: Share your learning takeaways using:  
-*Priorities, sacrifice, "less is more"*`
-            }
-        ];
-        
-        // DOM元素引用
+        // 全局变量
+        let allMaterials = [];
         const materialContainer = document.getElementById('material-container');
         const materialDetailModal = document.getElementById('material-detail-modal');
         const materialDetailContent = document.getElementById('material-detail-content');
         const detailModalTitle = document.getElementById('detail-modal-title');
         const closeModalButtons = document.querySelectorAll('.close-modal');
         
-        // 渲染训练材料卡片
+        // 加载材料索引
+        async function loadMaterials() {
+            try {
+                const response = await fetch('materials.json');
+                if (!response.ok) throw new Error('材料索引加载失败');
+                allMaterials = await response.json();
+                renderMaterials();
+                
+                // 检查URL参数是否请求了详情
+                const urlParams = new URLSearchParams(window.location.search);
+                const materialId = urlParams.get('material');
+                if (materialId) {
+                    showMaterialDetail(parseInt(materialId));
+                }
+            } catch (error) {
+                console.error('加载材料出错:', error);
+                materialContainer.innerHTML = `<div class="error">材料加载失败，请刷新页面重试</div>`;
+            }
+        }
+        
+        // 渲染材料卡片
         function renderMaterials() {
             materialContainer.innerHTML = '';
             
-            trainingMaterials.forEach(material => {
+            allMaterials.forEach(material => {
                 const materialCard = document.createElement('div');
                 materialCard.className = 'material-card';
                 materialCard.innerHTML = `
@@ -667,10 +620,10 @@ Create a short story using some phrase.
                         <div class="material-id">材料 ID: ${material.id}</div>
                     </div>
                     <div class="material-body">
-                        <p class="material-description">点击查看此口语训练材料的完整内容，包括学习、讨论和表达三个阶段的详细计划。</p>
+                        <p class="material-description">${material.description || '点击查看此口语训练材料的完整内容'}</p>
                         <div class="material-stats">
-                            <span><i class="fas fa-clock"></i> 60分钟训练</span>
-                            <span><i class="fas fa-chart-bar"></i> 中级难度</span>
+                            <span><i class="fas fa-clock"></i> ${material.duration || '60分钟'}训练</span>
+                            <span><i class="fas fa-chart-bar"></i> ${material.level || '中级'}难度</span>
                         </div>
                         <div class="material-actions">
                             <button class="btn btn-icon btn-view" data-id="${material.id}">
@@ -692,46 +645,57 @@ Create a short story using some phrase.
         }
         
         // 显示材料详情
-        function showMaterialDetail(id) {
-            const material = trainingMaterials.find(m => m.id === id);
+        async function showMaterialDetail(id) {
+            const material = allMaterials.find(m => m.id === id);
             if (!material) return;
             
-            // 将Markdown内容转换为HTML（简化处理）
-            const contentHtml = material.content
-                .replace(/## (.*)/g, '<h3 class="detail-section-title">$1</h3>')
-                .replace(/### (.*)/g, '<h4>$1</h4>')
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/`(.*?)`/g, '<code>$1</code>')
-                .replace(/> (.*)/g, '<blockquote>$1</blockquote>')
-                .replace(/\n/g, '<br>');
-            
-            detailModalTitle.textContent = material.title;
-            materialDetailContent.innerHTML = `
-                <div class="material-detail">
-                    <div class="detail-section">
-                        <h3><i class="fas fa-info-circle"></i> 材料概览</h3>
-                        <div class="detail-section-content">
-                            <p><strong>主题：</strong> ${material.title}</p>
-                            <p><strong>训练时长：</strong> 60分钟</p>
+            try {
+                // 加载Markdown内容
+                const response = await fetch(`posts/${material.filename}`);
+                if (!response.ok) throw new Error('材料内容加载失败');
+                const markdownContent = await response.text();
+                
+                // 解析Markdown
+                const contentHtml = parseMarkdown(markdownContent);
+                
+                // 更新URL添加参数
+                window.history.pushState({}, '', `?material=${id}`);
+                
+                detailModalTitle.textContent = material.title;
+                materialDetailContent.innerHTML = `
+                    <div class="material-detail">
+                        <div class="detail-section">
+                            <h3><i class="fas fa-info-circle"></i> 材料概览</h3>
+                            <div class="detail-section-content">
+                                <p><strong>主题：</strong> ${material.title}</p>
+                                <p><strong>训练时长：</strong> ${material.duration || '60分钟'}</p>
+                                <p><strong>难度等级：</strong> ${material.level || '中级'}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h3><i class="fas fa-book"></i> 训练内容</h3>
+                            <div class="detail-section-content">
+                                ${contentHtml}
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="detail-section">
-                        <h3><i class="fas fa-book"></i> 训练内容</h3>
-                        <div class="detail-section-content">
-                            ${contentHtml}
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            materialDetailModal.style.display = 'flex';
+                `;
+                
+                materialDetailModal.style.display = 'flex';
+            } catch (error) {
+                console.error('加载材料详情出错:', error);
+                materialDetailContent.innerHTML = `<div class="error">材料内容加载失败</div>`;
+            }
         }
         
         // 关闭模态框
         function closeModal(modal) {
             modal.style.display = 'none';
+            // 从URL移除material参数
+            const url = new URL(window.location);
+            url.searchParams.delete('material');
+            window.history.replaceState({}, '', url);
         }
         
         // 事件监听器
@@ -749,8 +713,8 @@ Create a short story using some phrase.
             }
         });
         
-        // 初始化渲染
-        renderMaterials();
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', loadMaterials);
     </script>
 </body>
 </html>

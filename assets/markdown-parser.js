@@ -4,6 +4,7 @@ function parseMarkdown(markdown) {
     const rules = [
         { regex: /^## (.*$)/gim, replace: '<h3>$1</h3>' },
         { regex: /^### (.*$)/gim, replace: '<h4>$1</h4>' },
+        { regex: /^#### (.*$)/gim, replace: '<h5>$1</h5>' },
         { regex: /\*\*(.*?)\*\*/g, replace: '<strong>$1</strong>' },
         { regex: /\*(.*?)\*/g, replace: '<em>$1</em>' },
         { regex: /`(.*?)`/g, replace: '<code>$1</code>' },

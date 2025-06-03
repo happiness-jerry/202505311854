@@ -2,19 +2,6 @@
 function parseMarkdown(markdown) {
     // 替换规则
     const rules = [
-        // 处理无序列表
-        { 
-            regex: /((?:^|\n)- .+(\n- .+)*)/g, 
-            replace: (match) => {
-                // 将列表项转换为HTML列表
-                const listItems = match.trim().split('\n- ')
-                    .filter(item => item.trim() !== '')
-                    .map(item => `<li>${item.trim().replace(/^- /, '')}</li>`)
-                    .join('');
-                return `<ul>${listItems}</ul>`;
-            }
-        },
-        // 其他规则
         { regex: /^## (.*$)/gim, replace: '<h3>$1</h3>' },
         { regex: /^### (.*$)/gim, replace: '<h4>$1</h4>' },
         { regex: /\*\*(.*?)\*\*/g, replace: '<strong>$1</strong>' },
